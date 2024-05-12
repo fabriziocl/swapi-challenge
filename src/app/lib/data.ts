@@ -20,6 +20,7 @@ interface FilmsRes {
 interface Character {
     name: string;
     url: string;
+    characterNumber: number;
 }
 
 
@@ -75,9 +76,13 @@ export async function getCharacter(url: string): Promise<Character> {
     try {
         const response = await fetch(url);
         const jsonRes = await response.json();
+        const characterNumberMatch = url.match(/\/(\d+)\/$/);
+        const characterNumber = parseInt(characterNumberMatch![1]);
+
         const character: Character = {
             name: jsonRes.name,
-            url: jsonRes.url
+            url: jsonRes.url,
+            characterNumber: characterNumber
         };
         return character;
     } catch (error) {
@@ -108,4 +113,3 @@ export async function getFilmsDetail(id: number) {
         throw new Error('Failed to fetch film detailed data')
     }
 }
-
