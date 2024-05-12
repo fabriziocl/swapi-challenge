@@ -27,7 +27,7 @@ export default async function FilmDetail({params}: any) {
                     width={200}
                     />
                     <Link
-                    href={c.url}
+                    href={`/characters/${c.characterNumber}`}
                     >{c.name}
                     </Link>
                     </div>
