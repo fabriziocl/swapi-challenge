@@ -5,6 +5,13 @@ interface Film {
     characters: string[];
 }
 
+interface FilmDetail {
+    filmName: string;
+    episode_id: number;
+    director: string;
+    characters: Character[];
+}
+
 interface FilmsRes {
     map: any;
     results: Film[];
@@ -12,7 +19,9 @@ interface FilmsRes {
 
 interface Character {
     name: string;
+    url: string;
 }
+
 
 export async function getFilmsData(){
       try {
@@ -62,25 +71,41 @@ export async function getCharacterData(characterUrls: string[]): Promise<string[
     return characterNames;
 }
 
-export async function getFilmsDetail(){
+export async function getCharacter(url: string): Promise<Character> {
     try {
-        const filmsResponse: FilmsRes = await getFilmsData();
-        const filmsDetail = await Promise.all(filmsResponse.results?.map(async (f: Film) => {
-            const characters = await getCharacterData(f.characters);
-            return {
-                filmName: f.title,
-                id: f.episode_id,
-                director: f.director,
-                characters,
-            };
-        }) || []);
-        console.log(filmsDetail)
-        return filmsDetail;
+        const response = await fetch(url);
+        const jsonRes = await response.json();
+        const character: Character = {
+            name: jsonRes.name,
+            url: jsonRes.url
+        };
+        return character;
     } catch (error) {
         console.error('Error: ', error);
-        throw new Error('Failed to fetch detail data');
+        throw new Error('Failed to fetch character data');
     }
 }
 
+export async function getFilmsDetail(id: number) {
+    try {
+        const response = await fetch(`https://swapi.dev/api/films/${id}`)
+        const jsonRes = await response.json()
 
+        const characterPromises: Promise<Character>[] = jsonRes.characters.map((characterUrl: string) => getCharacter(characterUrl));
+        const characters = await Promise.all(characterPromises);
+
+        const filmDetail: FilmDetail = {
+            filmName: jsonRes.title,
+            episode_id: jsonRes.episode_id,
+            director: jsonRes.director,
+            characters: characters
+        };
+
+        // console.log(filmDetail)
+        return filmDetail
+    } catch (error) {
+        console.error('Error: ', error);
+        throw new Error('Failed to fetch film detailed data')
+    }
+}
 
