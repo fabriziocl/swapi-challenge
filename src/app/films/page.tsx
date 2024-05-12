@@ -1,6 +1,5 @@
 import React from 'react'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
 import { getFilmsCard } from '@/app/lib/data'
 import Card from '../ui/Card'
 
@@ -11,7 +10,7 @@ interface Film {
 
 export default async function Films() {
   const films = await getFilmsCard()
-  
+ 
   return (
     <section>
       {films?.map((f: Film) => {
