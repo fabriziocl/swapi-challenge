@@ -23,6 +23,16 @@ interface Character {
     characterNumber: number;
 }
 
+interface CharDetail {
+    name: string;
+    eye_color: string,
+    birth_year: string,
+    hair_color: string;
+    height: string;
+    skin_color: string;
+    mass: string;
+}
+
 
 export async function getFilmsData(){
       try {
@@ -49,8 +59,8 @@ export async function getFilmsCard() {
         // console.log(sentData)
         return sentData;
     } catch (error) {
-        console.error('Error: ', error);
-        throw new Error('Failed to fetch cards data');
+        console.error('Error: ', error)
+        throw new Error('Failed to fetch cards data')
     }
 }
 
@@ -60,11 +70,11 @@ export async function getCharacterData(characterUrls: string[]): Promise<string[
 
     for (const characterUrl of characterUrls) {
         try {
-            const response = await fetch(characterUrl);
+            const response = await fetch(characterUrl)
             const characterData: Character = await response.json();
             characterNames.push(characterData.name);
         } catch (error) {
-            console.error('Error: ', error);
+            console.error('Error: ', error)
             throw new Error('Failed to fetch character data')
         }
     }
@@ -74,10 +84,10 @@ export async function getCharacterData(characterUrls: string[]): Promise<string[
 
 export async function getCharacter(url: string): Promise<Character> {
     try {
-        const response = await fetch(url);
-        const jsonRes = await response.json();
-        const characterNumberMatch = url.match(/\/(\d+)\/$/);
-        const characterNumber = parseInt(characterNumberMatch![1]);
+        const response = await fetch(url)
+        const jsonRes = await response.json()
+        const characterNumberMatch = url.match(/\/(\d+)\/$/)
+        const characterNumber = parseInt(characterNumberMatch![1])
 
         const character: Character = {
             name: jsonRes.name,
@@ -86,8 +96,8 @@ export async function getCharacter(url: string): Promise<Character> {
         };
         return character;
     } catch (error) {
-        console.error('Error: ', error);
-        throw new Error('Failed to fetch character data');
+        console.error('Error: ', error)
+        throw new Error('Failed to fetch character data')
     }
 }
 
@@ -96,8 +106,8 @@ export async function getFilmsDetail(id: number) {
         const response = await fetch(`https://swapi.dev/api/films/${id}`)
         const jsonRes = await response.json()
 
-        const characterPromises: Promise<Character>[] = jsonRes.characters.map((characterUrl: string) => getCharacter(characterUrl));
-        const characters = await Promise.all(characterPromises);
+        const characterPromises: Promise<Character>[] = jsonRes.characters.map((characterUrl: string) => getCharacter(characterUrl))
+        const characters = await Promise.all(characterPromises)
 
         const filmDetail: FilmDetail = {
             filmName: jsonRes.title,
@@ -109,7 +119,64 @@ export async function getFilmsDetail(id: number) {
         // console.log(filmDetail)
         return filmDetail
     } catch (error) {
-        console.error('Error: ', error);
+        console.error('Error: ', error)
         throw new Error('Failed to fetch film detailed data')
     }
+}
+
+
+//CORREGIR PARA QUE SOLO TRAIGA LA INFO NECESARIA
+export async function getAllCharacters() {
+    try {
+        let allCharacters: any = [];
+        let url = "https://swapi.dev/api/people"
+
+        while(url) {
+            const response = await fetch(url)
+            const jsonRes = await response.json()
+
+            const characters = jsonRes.results.map((char: any) => {
+                const trimmedUrl = char.url.split('/').slice(-2, -1)[0]
+                return {
+                    ...char,
+                    trimmedUrl
+                };
+            })
+            allCharacters = allCharacters.concat(characters)
+
+            url = jsonRes.next
+        }
+        // console.log(allCharacters)
+        return allCharacters
+    } catch (error) {
+        console.error('Error: ', error)
+        throw new Error('Failed to fetch all characters data')
+    }
+}
+
+export async function getCharacterDetail(id: number){
+    try {
+        const response = await fetch(`https://swapi.dev/api/people/${id}`)
+        const jsonres = await response.json()
+
+        const charDetail : CharDetail = {
+                name: jsonres.name,
+                eye_color: jsonres.eye_color,
+                birth_year: jsonres.birth_year,
+                hair_color: jsonres.hair_color,
+                height: jsonres.height,
+                skin_color: jsonres.skin_color,
+                mass: jsonres.mass,
+            
+        }
+        // console.log(charDetail)
+        return charDetail
+    } catch (error) {
+        console.error('Error: ', error)
+        throw new Error('Failed to fetch character detailed data')
+    }
+}
+
+export function checkData(data: any){
+    return data !== "n/a" && data !== "unknown"
 }
