@@ -8,7 +8,7 @@ interface CardProps {
     cardKey: number
 }
 
-const Card: React.FC<CardProps> = ({ title, cardKey }) => {
+const FilmCard: React.FC<CardProps> = ({ title, cardKey }) => {
     return (
         <div>
             <Image
@@ -22,4 +22,4 @@ const Card: React.FC<CardProps> = ({ title, cardKey }) => {
     );
 };
 
-export default Card;
+export default FilmCard;
