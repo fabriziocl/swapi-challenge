@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { getFilmsCard } from '@/app/lib/data'
-import Card from '../ui/Card'
+import FilmCard from '../ui/FilmCard'
 
 interface Film {
   filmName: string;
@@ -17,7 +17,7 @@ export default async function Films() {
         return (
           <div key={f.id}>
             <Link href={`/films/${f.id}`}>
-              <Card
+              <FilmCard
                 cardKey={f.id}
                 title={f.filmName}
               />
