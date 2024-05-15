@@ -10,10 +10,10 @@ export default async function FilmDetail({ params }: any) {
     // console.log(filmDetail)
 
     return (
-        <article className="min-h-screen text-[#ADB7BE]">
-            <div className="pt-9">
-                <div className="flex flex-col items-center p-6">
-                    <h2 className=" text-4xl sm:text-5xl lg:text-8xl mb-4">Episode {filmDetail.episode_id}: {filmDetail.filmName}</h2>
+        <article className="min-h-screen flex justify-center items-center text-[#ADB7BE]">
+            <div className="pt-9 bg-[#ff212e] lg:w-3/4 md:w-3/4 sm:w-full rounded-lg shadow-md">
+                <div className="flex flex-col justify-center items-center p-6">
+                    <h2 className="text-2xl sm:text-5xl lg:text-6xl p-4 text-center">Episode {filmDetail.episode_id}: {filmDetail.filmName}</h2>
                     <Image
                         src={episodes}
                         alt="generic movie image"
