@@ -1,10 +1,11 @@
+"use client"
 import Link from "next/link";
 import React from "react";
 import Image from "next/image";
 import films from '../../../public/ItoVIfilms.jpeg'
 import characters from '../../../public/characters.jpg'
 
-export default async function LandingPage() {
+export default function LandingPage() {
   return (
     <section className="lg:py-16">
       <div className="flex flex-col items-center mb-5">
@@ -20,9 +21,9 @@ export default async function LandingPage() {
         <div className='bg-[#ff212e] rounded-md lg:col-start-2 sm:w-full lg:col-span-5 place-self-center text-center justify-center p-3 my-2 shadow-md shadow-[#ff212e]'>
           <p className='text-[#ADB7BE] text-base sm:text-lg lg:text-xl m-4 font-bold'>Films</p>
           <Link
-           href="/films"
-           className="flex justify-center items-center"
-           >
+            href="/films"
+            className="flex justify-center items-center"
+          >
             <Image
               className="rounded"
               src={films}
@@ -51,4 +52,3 @@ export default async function LandingPage() {
     </section>
   )
 }
-;
