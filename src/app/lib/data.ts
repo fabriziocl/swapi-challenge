@@ -155,6 +155,28 @@ export async function getAllCharacters() {
     }
 }
 
+export async function getFilterData() {
+    try {
+        const characters = await getAllCharacters()
+        const eyeColorsSet: Set<string> = new Set()
+        const gendersSet: Set<string> = new Set()
+
+        characters.forEach((character: any) => {
+            eyeColorsSet.add(character.eye_color)
+            gendersSet.add(character.gender)
+        });
+
+        const uniqueEyeColors = Array.from(eyeColorsSet)
+        const uniqueGenders = Array.from(gendersSet)
+
+        return { uniqueEyeColors, uniqueGenders }
+    } catch (error) {
+        console.error('Error: ', error)
+        throw new Error('Failed to fetch filter data')
+    }
+}
+
+
 export async function getCharacterDetail(id: number){
     try {
         const response = await fetch(`https://swapi.dev/api/people/${id}`)
