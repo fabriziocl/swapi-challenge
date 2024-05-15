@@ -125,7 +125,7 @@ export async function getFilmsDetail(id: number) {
 }
 
 
-//CORREGIR PARA QUE SOLO TRAIGA LA INFO NECESARIA
+
 export async function getAllCharacters() {
     try {
         let allCharacters: any = [];
@@ -136,10 +136,11 @@ export async function getAllCharacters() {
             const jsonRes = await response.json()
 
             const characters = jsonRes.results.map((char: any) => {
-                const trimmedUrl = char.url.split('/').slice(-2, -1)[0]
                 return {
-                    ...char,
-                    trimmedUrl
+                    name: char.name,
+                    eye_color: char.eye_color,
+                    gender: char.gender,
+                    trimmedUrl: char.url.split('/').slice(-2, -1)[0]
                 };
             })
             allCharacters = allCharacters.concat(characters)
