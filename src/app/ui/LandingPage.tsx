@@ -17,8 +17,8 @@ export default async function LandingPage() {
       </div>
       {/* convertir en array y mandar a /lib */}
       <div className='grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-12 mt-10'>
-        <div className='bg-[#ff212e] rounded-md lg:col-start-2 sm:w-full lg:col-span-5 place-self-center text-center justify-center p-3 my2'>
-          <p className='text-[#ADB7BE] text-base sm:text-lg lg:text-xl mt-4'>Films</p>
+        <div className='bg-[#ff212e] rounded-md lg:col-start-2 sm:w-full lg:col-span-5 place-self-center text-center justify-center p-3 my-2 shadow-md shadow-[#ff212e]'>
+          <p className='text-[#ADB7BE] text-base sm:text-lg lg:text-xl m-4 font-bold'>Films</p>
           <Link
            href="/films"
            className="flex justify-center items-center"
@@ -32,8 +32,8 @@ export default async function LandingPage() {
             />
           </Link>
         </div>
-        <div className='bg-[#157dfc] rounded-md lg:col-start-7 sm:w-full lg:col-span-5 place-self-center text-center justify-center p-3 my-2'>
-          <p className='text-[#ADB7BE] text-base sm:text-lg lg:text-xl mt-4'>Characters</p>
+        <div className='bg-[#157dfc] rounded-md lg:col-start-7 sm:w-full lg:col-span-5 place-self-center text-center justify-center p-3 my-2 shadow-md shadow-[#157dfc]'>
+          <p className='text-[#ADB7BE] text-base sm:text-lg lg:text-xl m-4 font-bold'>Characters</p>
           <Link
             href="/characters"
             className="flex justify-center items-center"

@@ -10,7 +10,7 @@ interface CardProps {
 
 const FilmCard: React.FC<CardProps> = ({ title, cardKey }) => {
     return (
-        <div>
+        <div className=''>
             <Image
                 src={episodes}
                 alt="episodes generic image"
